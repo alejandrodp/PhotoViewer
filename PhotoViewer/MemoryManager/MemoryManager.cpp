@@ -31,6 +31,8 @@ bitset<32> MemoryManager::allocate(int size) {
         currentPage->usage = bitset<8>("10000000");
     }
 
+    std::cout << "Page to save photo: " << currentPage->page << std::endl;
+
     if(currentPage->page > 3)
     loadPage(currentPage->page);
 
@@ -76,6 +78,8 @@ bool MemoryManager::loadPage(int page) {
             if(leastUsed->usage.to_ulong() > currentPage->usage.to_ulong()){ //Checks if the current page is used more than the one chosen to be taken down
                 leastUsed = currentPage;
             }
+            //TODO: Esta condicional a veces no se ejecuta en absoluto, entonces hace
+            //que se caiga el programa porque jode a la condicional siguiente.
         }else if(currentPage->page == page){ //Get the details of the page to load
             toLoad = currentPage;
         }

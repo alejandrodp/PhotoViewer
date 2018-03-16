@@ -3,13 +3,14 @@
 //
 
 #include "MMU.h"
-
+#include <iostream>
 void * MMU::getAddress(bitset<32> virtAddress) {
     int page = 0;
     int offset = 0;
 
     offset = (int) (bitset<32>(virtAddress) & bitset<32>("00000000111111111111111111111111")).to_ulong();
     page = static_cast<int>(((virtAddress) >> 24).to_ulong());
+    std::cout << "Page number: " << page << " Desplazamiento: " << offset << std::endl;
 
     MemoryManager * manager = MemoryManager::getInstance();
 

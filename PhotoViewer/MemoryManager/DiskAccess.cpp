@@ -12,7 +12,7 @@ void *DiskAccess::readFromDisk(int pageNumber) {
     file.close();
     return data;
 }
-
+//TODO: No se están escribiendo los archivos, a pesar de que el método si se activa.
 bool DiskAccess::writeToDisk(int pageNumber, void *memorySpace, int size) {
     ofstream file = ofstream('Page' + pageNumber + ".bin",ios::out|ios::binary);
     char * buffer = static_cast<char *>(memorySpace);

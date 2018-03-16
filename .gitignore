@@ -89,5 +89,8 @@ fabric.properties
 !.vscode/extensions.json
 .history
 
+build-PhotoViewer-Desktop_Qt_5_9_4_GCC_64bit-Debug
+
+
 
 # End of https://www.gitignore.io/api/clion,linux,visualstudiocode

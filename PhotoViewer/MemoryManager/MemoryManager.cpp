@@ -74,13 +74,22 @@ MemoryManager * MemoryManager::getInstance() {
 bool MemoryManager::loadPage(int page) {
     bool success = false;
 
-    listNode * leastUsed = pageList;
-    listNode * currentPage = pageList;
+    listNode * leastUsed;
+    listNode * currentPage;
     listNode * toLoad = nullptr;
+    if(page > 1){
+        leastUsed = pageList;
+        currentPage = pageList->next;
+    }
+    else{
+        leastUsed = pageList->next;
+        currentPage = pageList->next->next;
+        toLoad = pageList;
+    }
 
     for(;currentPage != nullptr; currentPage = currentPage->next){
         if(currentPage->inMemory){ //Checks if the current page is in memory
-            if(leastUsed->usage.to_ulong() > currentPage->usage.to_ulong()){ //Checks if the current page is used more than the one chosen to be taken down
+            if(leastUsed->usage.to_ulong() >= currentPage->usage.to_ulong()){ //Checks if the current page is used more than the one chosen to be taken down
                 leastUsed = currentPage;
             }
             currentPage->usage >>= 1;

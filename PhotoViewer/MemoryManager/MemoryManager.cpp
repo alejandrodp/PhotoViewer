@@ -24,6 +24,7 @@ bitset<32> MemoryManager::allocate(int size) {
 
     if(!spaceFound){ //Create new page if needed
         currentPage->next = new listNode;
+        currentPage->next->start = (currentPage->start + 0x400000);
         currentPage->next->page = currentPage->page + 1;
         currentPage = currentPage->next;
         currentPage->next = nullptr;
@@ -33,8 +34,12 @@ bitset<32> MemoryManager::allocate(int size) {
 
     std::cout << "Page to save photo: " << currentPage->page << std::endl;
 
-    if(currentPage->page > 3)
-    loadPage(currentPage->page);
+    if(currentPage->page > 3){
+        currentPage->inMemory = false;
+        loadPage(currentPage->page);
+    }else{
+        currentPage->inMemory = true;
+    }
 
     newAddress = bitset<32>(currentPage->page);
 
@@ -69,17 +74,25 @@ MemoryManager * MemoryManager::getInstance() {
 bool MemoryManager::loadPage(int page) {
     bool success = false;
 
-    listNode * leastUsed = pageList;
-    listNode * currentPage = pageList;
+    listNode * leastUsed;
+    listNode * currentPage;
     listNode * toLoad = nullptr;
+    if(page > 1){
+        leastUsed = pageList;
+        currentPage = pageList->next;
+    }
+    else{
+        leastUsed = pageList->next;
+        currentPage = pageList->next->next;
+        toLoad = pageList;
+    }
 
     for(;currentPage != nullptr; currentPage = currentPage->next){
         if(currentPage->inMemory){ //Checks if the current page is in memory
-            if(leastUsed->usage.to_ulong() > currentPage->usage.to_ulong()){ //Checks if the current page is used more than the one chosen to be taken down
+            if(leastUsed->usage.to_ulong() >= currentPage->usage.to_ulong()){ //Checks if the current page is used more than the one chosen to be taken down
                 leastUsed = currentPage;
             }
-            //TODO: Esta condicional a veces no se ejecuta en absoluto, entonces hace
-            //que se caiga el programa porque jode a la condicional siguiente.
+            currentPage->usage >>= 1;
         }else if(currentPage->page == page){ //Get the details of the page to load
             toLoad = currentPage;
         }
@@ -90,6 +103,8 @@ bool MemoryManager::loadPage(int page) {
         void *dataToLoad = DiskAccess::readFromDisk(page);
 
         toLoad->start = memcpy(leastUsed->start, dataToLoad, 0x400000);
+
+        delete dataToLoad;
     }else{ //Clear up the memory
         toLoad->start = leastUsed->start;
         memset(toLoad->start, 0, 0x400000);

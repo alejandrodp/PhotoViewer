@@ -29,14 +29,17 @@ SOURCES += \
     MemoryManager/DiskAccess.cpp \
     MemoryManager/MemoryManager.cpp \
     MemoryManager/MMU.cpp \
-    structures/Lists/SimpleList.cpp
+    structures/Lists/SimpleList.cpp \
+    memorymonitor.cpp
 
 HEADERS += \
     launcher.h \
     MemoryManager/DiskAccess.h \
     MemoryManager/MemoryManager.h \
     MemoryManager/MMU.h \
-    structures/Lists/SimpleList.h
+    structures/Lists/SimpleList.h \
+    memorymonitor.h
 
 FORMS += \
-    launcher.ui
+    launcher.ui \
+    memorymonitor.ui

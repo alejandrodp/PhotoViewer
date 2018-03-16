@@ -30,14 +30,13 @@ void Launcher::on_action_ChangeDir_triggered()
         QDir directory(dir);
         QStringList images = directory.entryList(QStringList() << "*.jpeg" << "*.JPEG",QDir::Files);
         foreach(QString filename, images) {
-            QByteArray imgToBase64 = this->getImageToBytes(dir + "/" + filename)->toBase64();
+            QImage imgNew(dir + "/" + filename);
 
+            std::cout << filename.toStdString() << " Size: " << imgNew.byteCount() << std::endl;
 
-            std::cout << filename.toStdString() << " Size: " << imgToBase64.size() << std::endl;
-
-            std::bitset<32> pointer = menMan->allocate(imgToBase64.size());
-            QByteArray * toAllocate = static_cast<QByteArray *>(menMan->dereference(pointer));
-            *toAllocate = imgToBase64;
+            std::bitset<32> pointer = menMan->allocate(imgNew.byteCount());
+            QImage * toAllocate = static_cast<QImage *>(menMan->dereference(pointer));
+            *toAllocate = imgNew;
 
 
             this->photos->AddEnd(pointer);
@@ -64,14 +63,7 @@ QByteArray * Launcher::getImageToBytes(QString file) {
 
 void Launcher::on_list_imgs_currentRowChanged(int currentRow)
 {
-    QByteArray * imgToGet = static_cast<QByteArray *>(menMan->dereference(photos->getValue(currentRow)));
-    //QByteArray tempArr = *imgToGet;
-    std::cout << imgToGet->data() << std::endl;
+    QImage * imgToGet = static_cast<QImage *>(menMan->dereference(photos->getValue(currentRow)));
 
-    //QImage img = QImage::loadFromData();
-    //QImage imgNew(dir + "/" + "ordinary-morning (2).jpg");
-    QPixmap image;
-    QByteArray *ba = imgToGet;
-    image.loadFromData(*ba);
-    ui->label_imgPrev->setPixmap(image);
+    ui->label_imgPrev->setPixmap(QPixmap::fromImage(*imgToGet));
 }

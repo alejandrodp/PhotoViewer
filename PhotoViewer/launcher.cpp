@@ -3,15 +3,18 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QBuffer>
+#include "MemoryViewer.h"
 
 Launcher::Launcher(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Launcher),
     photos(new SimpleList),
     menMan(MemoryManager::getInstance())
+
 {
     ui->setupUi(this);
-
+    //monitorView = new MemoryViewer();
+    //monitorView->show();
 }
 
 Launcher::~Launcher()
@@ -49,17 +52,6 @@ void Launcher::on_action_Exit_triggered()
 {
     this->close();
 }
-
-QByteArray * Launcher::getImageToBytes(QString file) {
-    QImage img_enrll;
-    img_enrll.load(file);
-    QByteArray *arr;
-    QBuffer buffer(arr);
-    buffer.open(QIODevice::WriteOnly);
-    img_enrll.save(&buffer, "JPEG");
-    return arr;
-}
-
 
 void Launcher::on_list_imgs_currentRowChanged(int currentRow)
 {

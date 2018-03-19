@@ -17,10 +17,10 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Launcher</string>
+   <string>PhotoViewer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,10">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,12">
     <item>
      <widget class="QGroupBox" name="groupBox">
       <property name="title">

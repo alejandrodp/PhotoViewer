@@ -9,6 +9,7 @@
 #include "DiskAccess.h"
 #include <cstring>
 #include "bitset"
+#include "MemoryViewer.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ using namespace std;
 class MemoryManager {
 
     friend class MMU;
+    friend class MemoryViewer;
 
 private:
 
@@ -41,6 +43,9 @@ public:
         listNode * next;
         bitset<8> usage;
     };
+
+signals:
+    void change(listNode pages);
 
 protected:
 

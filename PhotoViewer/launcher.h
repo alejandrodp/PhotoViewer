@@ -5,10 +5,13 @@
 #include <QListWidgetItem>
 #include "structures/Lists/SimpleList.h"
 #include "MemoryManager/MemoryManager.h"
+#include "MemoryViewer.h"
 
 namespace Ui {
 class Launcher;
 }
+
+class MemoryViewer;
 
 class Launcher : public QMainWindow
 {
@@ -26,11 +29,12 @@ private slots:
     void on_list_imgs_currentRowChanged(int currentRow);
 
 private:
+
     Ui::Launcher *ui;
     QString dir;
     SimpleList* photos;
     MemoryManager* menMan;
-    QByteArray * getImageToBytes(QString file);
+    MemoryViewer * monitorView;
 
 };
 

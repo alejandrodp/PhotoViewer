@@ -113,6 +113,8 @@ bool MemoryManager::loadPage(int page) {
     toLoad->inMemory = true;
     leastUsed->inMemory = false;
 
+    emit change(*pageList);
+
     return success;
 }
 

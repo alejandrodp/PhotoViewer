@@ -30,7 +30,7 @@ SOURCES += \
     MemoryManager/MemoryManager.cpp \
     MemoryManager/MMU.cpp \
     structures/Lists/SimpleList.cpp \
-    memorymonitor.cpp
+    MemoryViewer.cpp
 
 HEADERS += \
     launcher.h \
@@ -38,8 +38,8 @@ HEADERS += \
     MemoryManager/MemoryManager.h \
     MemoryManager/MMU.h \
     structures/Lists/SimpleList.h \
-    memorymonitor.h
+    MemoryViewer.h
 
 FORMS += \
     launcher.ui \
-    memorymonitor.ui
+    MemoryViewer.ui

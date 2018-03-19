@@ -10,13 +10,13 @@ MemoryManager * MemoryManager::instance = nullptr;
 
 bitset<32> MemoryManager::allocate(int size) {
     listNode * currentPage = pageList;
-    bool spaceFound = false;
+    bool spaceFound = false; //Flag to know if a new page will be needed
     bitset<32> newAddress;
     for(;currentPage != nullptr; currentPage = currentPage->next){
-        currentPage->usage >>= 1;
-        if(currentPage->used + size < 0x400000) {
+        currentPage->usage >>= 1; //Shift usage counter to the right
+        if(currentPage->used + size < 0x400000) {  //Check if there is enough space in any of the existing pages
             spaceFound = true;
-            currentPage->usage[0] = 1;
+            currentPage->usage[0] = 1; //Mark chosen page as recent used
             break;
         }else if(currentPage->next == nullptr){
             break;
@@ -25,7 +25,7 @@ bitset<32> MemoryManager::allocate(int size) {
 
     if(!spaceFound){ //Create new page if needed
         currentPage->next = new listNode;
-        currentPage->next->start = (currentPage->start + 0x400000);
+        currentPage->next->start = (currentPage->start + 0x400000); //The page should start where the last one ends
         currentPage->next->page = currentPage->page + 1;
         currentPage = currentPage->next;
         currentPage->next = nullptr;
@@ -42,13 +42,13 @@ bitset<32> MemoryManager::allocate(int size) {
         currentPage->inMemory = true;
     }
 
-    newAddress = bitset<32>(currentPage->page);
+    newAddress = bitset<32>(currentPage->page); //Initializes a new bitset to store the pointers information
+
+    newAddress <<= 24; //The bitset's data is shifted to the position of page bits
+
+    newAddress |= bitset<32>(currentPage->used); //A logic "or" to add the offset to the address
 
     currentPage->used += size;
-
-    newAddress <<= 24;
-
-    newAddress |= bitset<32>(currentPage->used - size);
 
     emit change(*pageList);
 
@@ -86,7 +86,7 @@ bool MemoryManager::loadPage(int page) {
     listNode * leastUsed;
     listNode * currentPage;
     listNode * toLoad = nullptr;
-    if(page > 1){
+    if(page > 1){ //Check for the special case that the page to load is the first page
         leastUsed = pageList;
         currentPage = pageList->next;
     }
@@ -101,22 +101,22 @@ bool MemoryManager::loadPage(int page) {
             if(leastUsed->usage.to_ulong() >= currentPage->usage.to_ulong()){ //Checks if the current page is used more than the one chosen to be taken down
                 leastUsed = currentPage;
             }
-            currentPage->usage >>= 1;
+            currentPage->usage >>= 1; //Shift the current page's usage counter to the right
         }else if(currentPage->page == page){ //Get the details of the page to load
             toLoad = currentPage;
         }
     }
 
-    DiskAccess::writeToDisk(leastUsed->page, leastUsed->start, 0x400000);
+    DiskAccess::writeToDisk(leastUsed->page, leastUsed->start, 0x400000); //Write the content of the page  to take down into the disk
     if(toLoad->used > 0) { //Check for something to load
-        void *dataToLoad = DiskAccess::readFromDisk(page);
+        void *dataToLoad = DiskAccess::readFromDisk(page); //Temporary pointer to swap the pages
 
-        toLoad->start = memcpy(leastUsed->start, dataToLoad, 0x400000);
+        toLoad->start = memcpy(leastUsed->start, dataToLoad, 0x400000); //Update the first address of the page that is being loaded
 
-        delete dataToLoad;
-    }else{ //Clear up the memory
-        toLoad->start = leastUsed->start;
-        memset(toLoad->start, 0, 0x400000);
+        delete dataToLoad; //Release the temporary pointer
+    }else{ //If there is nothing to load, clear up the memory
+        toLoad->start = leastUsed->start; //Update the first address of the page that is being loaded
+        memset(toLoad->start, 0, 0x400000); //Set all bits in the position to 0, as if called with calloc
     }
 
     toLoad->inMemory = true;

@@ -22,7 +22,7 @@ class MemoryManager : public QObject {
 
 private:
 
-    explicit MemoryManager(int size, QObject * parent = 0);
+    explicit MemoryManager(int size, QObject * parent = nullptr);
     void * mem;
     int size;
     ~MemoryManager();

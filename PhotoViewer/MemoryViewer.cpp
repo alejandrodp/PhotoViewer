@@ -13,7 +13,6 @@ MemoryViewer::MemoryViewer(QWidget *parent) :
 }
 
 void MemoryViewer::selector(MemoryManager::listNode pages){
-    return;
     MemoryManager::listNode * pagesPointer = &pages;
     while(pagesPointer != nullptr){
         if(pages.inMemory){
@@ -37,8 +36,13 @@ void MemoryViewer::setPagesDiskSlot(MemoryManager::listNode * page) {
     pageRowDisk = new QTableWidgetItem("Página " + QString::number(page->page));
     pageRowDisk->setFlags(pageRowDisk->flags() ^ Qt::ItemIsEditable);
 
-    usedRowDisk = new QTableWidgetItem(QString::number(100/page->used * page->used));
-    usedRowDisk->setFlags(pageRowDisk->flags() ^ Qt::ItemIsEditable);
+    if(page->used != 0){
+        usedRowDisk = new QTableWidgetItem(QString::number(100/page->used * page->used));
+        usedRowDisk->setFlags(pageRowDisk->flags() ^ Qt::ItemIsEditable);
+    }else{
+        usedRowDisk = new QTableWidgetItem(QString::number(0));
+        usedRowDisk->setFlags(pageRowDisk->flags() ^ Qt::ItemIsEditable);
+    }
 
     table->setItem(ROW, PAGES, pageRowDisk);
     table->setItem(ROW, USAGE, usedRowDisk);
@@ -56,8 +60,13 @@ void MemoryViewer::setPagesMemSlot(MemoryManager::listNode * page) {
     pageRowMem = new QTableWidgetItem("Página " + QString::number(page->page));
     pageRowMem->setFlags(pageRowMem->flags() ^ Qt::ItemIsEditable);
 
-    usedRowMem = new QTableWidgetItem(QString::number((double)(100/page->used * page->used)));
-    usedRowMem->setFlags(usedRowMem->flags() ^ Qt::ItemIsEditable);
+    if(page->used != 0){
+        usedRowMem = new QTableWidgetItem(QString::number((double)(100/page->used * page->used)));
+        usedRowMem->setFlags(usedRowMem->flags() ^ Qt::ItemIsEditable);
+    }else{
+        usedRowMem = new QTableWidgetItem(QString::number(0));
+        usedRowMem->setFlags(usedRowMem->flags() ^ Qt::ItemIsEditable);
+    }
 
     ui->table_pagesInMem->setItem(ROW, PAGES, pageRowMem);
     ui->table_pagesInMem->setItem(ROW, USAGE, usedRowMem);

@@ -8,8 +8,6 @@ namespace Ui {
 class MemoryViewer;
 }
 
-
-
 class MemoryViewer : public QDialog
 {
     Q_OBJECT

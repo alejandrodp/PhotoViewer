@@ -9,12 +9,13 @@ Launcher::Launcher(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Launcher),
     photos(new SimpleList),
-    menMan(MemoryManager::getInstance())
+    menMan(MemoryManager::getInstance()),
+    monitor(new MemoryViewer)
 
 {
     ui->setupUi(this);
-    monitorView = new MemoryViewer();
-    monitorView->show();
+    connect(menMan, SIGNAL(change(MemoryManager::listNode)), monitor, SLOT(selector(MemoryManager::listNode)));
+    monitor->show();
 }
 
 Launcher::~Launcher()

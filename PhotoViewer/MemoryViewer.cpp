@@ -4,11 +4,10 @@
 
 MemoryViewer::MemoryViewer(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::MemoryViewer)
+    ui(new Ui::MemoryViewer),
+    manager(MemoryManager::getInstance())
 {
     ui->setupUi(this);
-    connect(manager, SIGNAL(change(MemoryManager::listNode)), this, SLOT(selector(MemoryManager::listNode)));
-
 
 }
 

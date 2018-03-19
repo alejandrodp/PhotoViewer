@@ -47,7 +47,7 @@ public:
     };
 
 signals:
-    void change(listNode);
+    void change(MemoryManager::listNode);
 
 protected:
 

@@ -32,9 +32,10 @@ private:
 
     Ui::Launcher *ui;
     QString dir;
-    SimpleList* photos;
-    MemoryManager* menMan;
-    MemoryViewer * monitorView;
+    SimpleList * photos;
+    MemoryManager * menMan;
+    MemoryViewer * monitor;
+
 
 };
 

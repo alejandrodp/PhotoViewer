@@ -52,7 +52,7 @@ bitset<32> MemoryManager::allocate(int size) {
     return newAddress;
 }
 
-MemoryManager::MemoryManager(int size){
+MemoryManager::MemoryManager(int size, QObject * parent) : QObject(parent){
     mem = malloc(static_cast<size_t>(size));
     this->size = size;
     pageList = new listNode();

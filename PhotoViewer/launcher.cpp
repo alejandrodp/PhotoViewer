@@ -13,8 +13,8 @@ Launcher::Launcher(QWidget *parent) :
 
 {
     ui->setupUi(this);
-    //monitorView = new MemoryViewer();
-    //monitorView->show();
+    monitorView = new MemoryViewer();
+    monitorView->show();
 }
 
 Launcher::~Launcher()

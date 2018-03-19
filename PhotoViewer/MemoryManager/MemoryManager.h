@@ -47,7 +47,7 @@ public:
     };
 
 signals:
-    void change(listNode pages);
+    void change(listNode);
 
 protected:
 

@@ -9,21 +9,23 @@
 #include "DiskAccess.h"
 #include <cstring>
 #include "bitset"
-#include "MemoryViewer.h"
+#include <QObject>
 
 using namespace std;
 
 
-class MemoryManager {
+class MemoryManager : public QObject {
+
+    Q_OBJECT
 
     friend class MMU;
-    friend class MemoryViewer;
 
 private:
 
     explicit MemoryManager(int size);
     void * mem;
     int size;
+    ~MemoryManager();
 
     static MemoryManager * instance; //Singleton
 

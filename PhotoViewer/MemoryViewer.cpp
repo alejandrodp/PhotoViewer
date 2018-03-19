@@ -8,13 +8,14 @@ MemoryViewer::MemoryViewer(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(manager, &MemoryManager::change, [&](MemoryManager::listNode pages) {
-        while(pages.next != nullptr){
+        MemoryManager::listNode * pagesPointer = &pages;
+        while(pagesPointer != nullptr){
             if(pages.inMemory){
-                this->setPagesMemSlot(&pages));
+                this->setPagesMemSlot(&pages);
             }else{
                 this->setPagesDiskSlot(&pages);
             }
-            pages = pages.next;
+            pagesPointer = pagesPointer->next;
         }
     });
 
@@ -56,9 +57,4 @@ void MemoryViewer::setPagesMemSlot(MemoryManager::listNode * page) {
 MemoryViewer::~MemoryViewer()
 {
     delete ui;
-}
-
-void MemoryViewer::on_pushButton_clicked()
-{
-    //monitor->start();
 }

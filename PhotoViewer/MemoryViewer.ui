@@ -106,21 +106,8 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>GroupBox</string>
+      <string>Datos varios</string>
      </property>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>90</y>
-        <width>80</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-     </widget>
     </widget>
    </item>
   </layout>

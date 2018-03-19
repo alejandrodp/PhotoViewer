@@ -64,6 +64,10 @@ MemoryManager::MemoryManager(int size){
     pageList->usage = bitset<8>("00000000");
 }
 
+MemoryManager::~MemoryManager(){
+
+}
+
 MemoryManager * MemoryManager::getInstance() {
     if(instance == nullptr){
         instance = new MemoryManager(0xC00000);

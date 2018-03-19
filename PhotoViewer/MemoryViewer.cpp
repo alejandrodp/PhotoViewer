@@ -13,7 +13,7 @@ MemoryViewer::MemoryViewer(QWidget *parent) :
 }
 
 void MemoryViewer::selector(MemoryManager::listNode pages){
-
+    return;
     MemoryManager::listNode * pagesPointer = &pages;
     while(pagesPointer != nullptr){
         if(pages.inMemory){

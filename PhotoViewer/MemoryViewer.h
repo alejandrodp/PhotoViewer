@@ -21,7 +21,7 @@ public:
     void setPagesDiskSlot(MemoryManager::listNode * page);
 
 public slots:
-    void selector(MemoryManager::listNode);
+    void selector(MemoryManager::listNode pages);
 
 private:
     Ui::MemoryViewer *ui;

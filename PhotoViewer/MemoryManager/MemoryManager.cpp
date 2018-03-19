@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "MemoryManager.h"
+#include <QThread>
 
 MemoryManager * MemoryManager::instance = nullptr;
 
@@ -48,6 +49,10 @@ bitset<32> MemoryManager::allocate(int size) {
     newAddress <<= 24;
 
     newAddress |= bitset<32>(currentPage->used - size);
+
+    emit change(*pageList);
+
+    QThread::sleep(0.5);
 
     return newAddress;
 }
@@ -118,6 +123,8 @@ bool MemoryManager::loadPage(int page) {
     leastUsed->inMemory = false;
 
     emit change(*pageList);
+
+    QThread::sleep(0.5);
 
     return success;
 }

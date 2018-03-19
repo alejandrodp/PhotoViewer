@@ -31,15 +31,16 @@ bitset<32> MemoryManager::allocate(int size) {
         currentPage->next = nullptr;
         currentPage->used = 0;
         currentPage->usage = bitset<8>("10000000");
+        if (currentPage->page > 3)
+        currentPage->inMemory = false;
+        else
+        currentPage->inMemory = true;
     }
 
     std::cout << "Page to save photo: " << currentPage->page << std::endl;
 
-    if(currentPage->page > 3){
-        currentPage->inMemory = false;
+    if(currentPage->inMemory == false){
         loadPage(currentPage->page);
-    }else{
-        currentPage->inMemory = true;
     }
 
     newAddress = bitset<32>(currentPage->page); //Initializes a new bitset to store the pointers information

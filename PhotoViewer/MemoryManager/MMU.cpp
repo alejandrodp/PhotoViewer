@@ -10,7 +10,6 @@ void * MMU::getAddress(bitset<32> virtAddress) {
 
     offset = (int) (bitset<32>(virtAddress) & bitset<32>("00000000111111111111111111111111")).to_ulong(); //Logical "and" to isolate the value of the address' offset
     page = (int) (((virtAddress) >> 24).to_ulong()); //Shift the bitset's pages to the initial position of the set and get the page number from them
-    std::cout << "Page number: " << page << " Desplazamiento: " << offset << std::endl;
 
     MemoryManager * manager = MemoryManager::getInstance(); //Get the memory manager
 
@@ -29,6 +28,9 @@ void * MMU::getAddress(bitset<32> virtAddress) {
     }
 
     void * address = currentNode->start + offset;
+
+    std::cout << std::dec << "Page number: " << page << " Inicio: " << currentNode->start;
+    std::cout << " Desplazamiento: 0x" << std::hex << offset << std::endl;
 
     return address;
 }

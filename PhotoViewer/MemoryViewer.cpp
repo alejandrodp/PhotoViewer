@@ -13,9 +13,11 @@ MemoryViewer::MemoryViewer(QWidget *parent) :
 }
 
 void MemoryViewer::selector(MemoryManager::listNode pages){
+    ui->table_pagesInDisk->setRowCount(0);
+    ui->table_pagesInMem->setRowCount(0);
     MemoryManager::listNode * pagesPointer = &pages;
     while(pagesPointer != nullptr){
-        if(pages.inMemory){
+        if(pagesPointer->inMemory){
             this->setPagesMemSlot(pagesPointer);
         }else{
             this->setPagesDiskSlot(pagesPointer);

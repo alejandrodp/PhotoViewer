@@ -106,7 +106,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>Datos varios</string>
+      <string>Información general</string>
      </property>
     </widget>
    </item>

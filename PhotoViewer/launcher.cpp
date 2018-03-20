@@ -32,7 +32,11 @@ void Launcher::on_action_ChangeDir_triggered()
 
 
         QDir directory(dir);
-        QStringList images = directory.entryList(QStringList() << "*.jpeg" << "*.JPEG",QDir::Files);
+        QStringList images = directory.entryList(QStringList() << "*.jpeg" << "*.bmp"
+                                                 << "*.BMP" << ".gif"
+                                                 << ".GIF" << ".jpg"
+                                                 << ".JPG" << "*.png"
+                                                 << "*.PNG" << "*.JPEG",QDir::Files);
         foreach(QString filename, images) {
             QImage imgNew(dir + "/" + filename);
 

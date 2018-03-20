@@ -1,0 +1,4 @@
+La carpeta de pruebas contiene ciertas cantidades de fotos, determinadas para demostrar que el programa sí aplica el concepto de memoria virtual
+
+Prueba1: Esta carpeta contiene 768 fotos, esto hará que el programa cree 38 páginas en total.
+Prueba2: Esta carpeta contiene 392 fotos, esto hará que el programa cree 20 páginas en total.

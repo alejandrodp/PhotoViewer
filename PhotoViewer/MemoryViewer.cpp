@@ -9,7 +9,6 @@ MemoryViewer::MemoryViewer(QWidget *parent) :
     manager(MemoryManager::getInstance())
 {
     ui->setupUi(this);
-
 }
 
 void MemoryViewer::selector(MemoryManager::listNode pages){
@@ -24,6 +23,8 @@ void MemoryViewer::selector(MemoryManager::listNode pages){
         }
         pagesPointer = pagesPointer->next;
     }
+    this->setTotalmemory(&pages);
+
 }
 
 void MemoryViewer::setPagesDiskSlot(MemoryManager::listNode * page) {
@@ -39,11 +40,11 @@ void MemoryViewer::setPagesDiskSlot(MemoryManager::listNode * page) {
     pageRowDisk->setFlags(pageRowDisk->flags() ^ Qt::ItemIsEditable);
 
     if(page->used != 0){
-        double usedPorcent = page->used/4194304.0 * 100.0;
+        double usedPorcent = page->used/1048576.0;
         usedRowDisk = new QTableWidgetItem(QString::number(usedPorcent, 'f', 3));
         usedRowDisk->setFlags(pageRowDisk->flags() ^ Qt::ItemIsEditable);
     }else{
-        usedRowDisk = new QTableWidgetItem(QString::number(0));
+        usedRowDisk = new QTableWidgetItem("0");
         usedRowDisk->setFlags(pageRowDisk->flags() ^ Qt::ItemIsEditable);
     }
 
@@ -64,16 +65,27 @@ void MemoryViewer::setPagesMemSlot(MemoryManager::listNode * page) {
     pageRowMem->setFlags(pageRowMem->flags() ^ Qt::ItemIsEditable);
 
     if(page->used != 0){
-        double usedPorcent = page->used/4194304.0 * 100.0;
+        double usedPorcent = page->used/1048576.0;
         usedRowMem = new QTableWidgetItem(QString::number(usedPorcent, 'f', 3));
         usedRowMem->setFlags(usedRowMem->flags() ^ Qt::ItemIsEditable);
     }else{
-        usedRowMem = new QTableWidgetItem(QString::number(0));
+        usedRowMem = new QTableWidgetItem("0");
         usedRowMem->setFlags(usedRowMem->flags() ^ Qt::ItemIsEditable);
     }
 
     ui->table_pagesInMem->setItem(ROW, PAGES, pageRowMem);
     ui->table_pagesInMem->setItem(ROW, USAGE, usedRowMem);
+}
+
+void MemoryViewer::setTotalmemory(MemoryManager::listNode * page){
+    double totalMB = 0;
+    while(page != nullptr){
+        totalMB += page->used;
+        page = page->next;
+    }
+
+    totalMB /= 1048576.0;
+    ui->lcd_TotalMem->display(totalMB);
 }
 
 

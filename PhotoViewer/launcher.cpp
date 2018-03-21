@@ -25,8 +25,8 @@ Launcher::~Launcher()
 
 void Launcher::on_action_ChangeDir_triggered()
 {
-    this->dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-                                                     "/home",
+    this->dir = QFileDialog::getExistingDirectory(this, tr("Seleccione una carpeta"),
+                                                     QDir::currentPath(),
                                                      QFileDialog::ShowDirsOnly
                                                      | QFileDialog::DontResolveSymlinks);
 
@@ -55,6 +55,7 @@ void Launcher::on_action_ChangeDir_triggered()
 
 void Launcher::on_action_Exit_triggered()
 {
+    monitor->close();
     this->close();
 }
 

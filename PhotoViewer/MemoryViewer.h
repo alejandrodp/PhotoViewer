@@ -15,18 +15,6 @@ class MemoryViewer : public QDialog
 public:
     explicit MemoryViewer(QWidget *parent = 0);
     ~MemoryViewer();
-    /**
-     * @brief This set the info of pages in memory into the GUI of memory monitor
-     * 
-     * @param page The pointer of page to add.
-     */
-    void setPagesMemSlot(MemoryManager::listNode * page);
-    /**
-     * @brief This set the info of pages in disk into the GUI of memory monitor
-     * 
-     * @param page The pointer of page to add.
-     */
-    void setPagesDiskSlot(MemoryManager::listNode * page);
 
 public slots:
     /**
@@ -43,6 +31,19 @@ private:
     enum Columns {
         PAGES, USAGE
     };
+    /**
+     * @brief This set the info of pages in memory into the GUI of memory monitor
+     *
+     * @param page The pointer of page to add.
+     */
+    void setPagesMemSlot(MemoryManager::listNode * page);
+    /**
+     * @brief This set the info of pages in disk into the GUI of memory monitor
+     *
+     * @param page The pointer of page to add.
+     */
+    void setPagesDiskSlot(MemoryManager::listNode * page);
+    void setTotalmemory(MemoryManager::listNode * page);
 };
 
 #endif // MEMORYVIEWER_H

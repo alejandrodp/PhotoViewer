@@ -52,7 +52,7 @@
           </column>
           <column>
            <property name="text">
-            <string>Capacidad usada (%)</string>
+            <string>Capacidad usada (MB)</string>
            </property>
            <property name="textAlignment">
             <set>AlignCenter</set>
@@ -90,7 +90,7 @@
           </column>
           <column>
            <property name="text">
-            <string>capacidad usada (%)</string>
+            <string>capacidad usada (MB)</string>
            </property>
            <property name="textAlignment">
             <set>AlignCenter</set>
@@ -108,6 +108,35 @@
      <property name="title">
       <string>Información general</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Tamaño total de las páginas (MB):</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="lcd_TotalMem">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

@@ -87,7 +87,6 @@
      <string>Opciones</string>
     </property>
     <addaction name="action_ChangeDir"/>
-    <addaction name="action_Exit"/>
    </widget>
    <addaction name="menuOpciones"/>
   </widget>

@@ -18,7 +18,7 @@ void *DiskAccess::readFromDisk(int pageNumber) {
     return data;
 }
 
-bool DiskAccess::writeToDisk(int pageNumber, void *memorySpace, int size) {
+void DiskAccess::writeToDisk(int pageNumber, void *memorySpace, int size) {
     stringstream string;
     string << "Page" << pageNumber << ".bin";
     ofstream file(string.str(), ios::out | ios::binary);
@@ -26,5 +26,4 @@ bool DiskAccess::writeToDisk(int pageNumber, void *memorySpace, int size) {
     char * buffer = static_cast<char *>(memorySpace);
     file.write(buffer, size);
     file.close();
-    return false;
 }

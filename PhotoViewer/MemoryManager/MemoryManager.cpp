@@ -60,7 +60,6 @@ bitset<32> MemoryManager::allocate(int size) {
 
 MemoryManager::MemoryManager(int size, QObject * parent) : QObject(parent){
     mem = malloc(static_cast<size_t>(size));
-    this->size = size;
     pageList = new listNode();
     pageList->page = 1;
     pageList->inMemory = true;
@@ -81,9 +80,7 @@ MemoryManager * MemoryManager::getInstance() {
     return instance;
 }
 
-bool MemoryManager::loadPage(int page) {
-    bool success = false;
-
+void MemoryManager::loadPage(int page) {
     listNode * leastUsed;
     listNode * currentPage;
     listNode * toLoad = nullptr;
@@ -109,6 +106,7 @@ bool MemoryManager::loadPage(int page) {
     }
 
     DiskAccess::writeToDisk(leastUsed->page, leastUsed->start, 0x400000); //Write the content of the page  to take down into the disk
+
     if(toLoad->used > 0) { //Check for something to load
         void *dataToLoad = DiskAccess::readFromDisk(page); //Temporary pointer to swap the pages
 
@@ -126,8 +124,6 @@ bool MemoryManager::loadPage(int page) {
     emit change(*pageList);
 
     QThread::sleep(0.5);
-
-    return success;
 }
 
 void *MemoryManager::dereference(bitset<32> address) {
